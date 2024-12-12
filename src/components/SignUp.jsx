@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "../config/firebaseConfig";
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth' ;
 
@@ -6,6 +7,8 @@ const SignUp = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [username, setUsername] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const validateUsername = (username) => {
         const minLength = 3;
@@ -37,6 +40,7 @@ const SignUp = () => {
             console.log("User signed up:", user);
         } catch (err) {
             console.error(err);
+            setError(err.message);
         }
     };
 
@@ -45,32 +49,38 @@ const SignUp = () => {
             await signInWithPopup(auth, googleProvider);
         } catch (err) {
             console.error(err);
+            setError(err.message);
         }
     };
 
     return (
-        <div>
-            <input
-                type="text"
-                placeholder="Username..."
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-            />
-            <input 
-                placeholder="Email..." 
-                //value = {email}
-                onChange={((e) => setEmail(e.target.value))} 
-            />
-            <input 
-                placeholder="Password..."
-                type="password"
-                onChange={((e) => setPassword(e.target.value))} 
-            />
-            <button onClick={signUp}>Sign Up</button>
-
-            <button onClick={signInWithGoogle}>Sign in with Google</button>
+        <div className="card">
+          <input
+            type="text"
+            placeholder="Username..."
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <input
+            type="email"
+            placeholder="Email..."
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Password..."
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button onClick={signUp}>Sign Up</button>
+          <button onClick={signInWithGoogle}>Sign in with Google</button>
+          <p className="navigate-text" onClick={() => navigate("/login")}>
+        Already have an account? Log In
+      </p>
+          {error && <p>{error}</p>}
         </div>
-    );
+      );
 
 };
 
