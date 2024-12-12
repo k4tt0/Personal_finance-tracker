@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "../config/firebaseConfig";
 import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth' ;
+import fin1 from "../images/fin1.png";
 
 const SignUp = () => {
     const [email, setEmail] = useState("");
@@ -38,6 +39,7 @@ const SignUp = () => {
                 displayName: username
             });
             console.log("User signed up:", user);
+            navigate("/main");
         } catch (err) {
             console.error(err);
             setError(err.message);
@@ -47,6 +49,7 @@ const SignUp = () => {
     const signInWithGoogle = async () => {
         try {
             await signInWithPopup(auth, googleProvider);
+            navigate("/main");
         } catch (err) {
             console.error(err);
             setError(err.message);
@@ -55,18 +58,24 @@ const SignUp = () => {
 
     return (
         <div className="card">
+            <img src={fin1} alt="fin1" className="fin1-image"/>
+            <h2> Sign Up </h2> {}
+            <h3> Create an account to start tracking your finances </h3>  
+            <label htmlFor = "username"> Username </label> {}
           <input
             type="text"
             placeholder="Username..."
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
+          <label htmlFor = "email"> Email </label> {}
           <input
             type="email"
             placeholder="Email..."
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
+          <label htmlFor = "password"> Password </label> {}
           <input
             type="password"
             placeholder="Password..."
@@ -74,11 +83,11 @@ const SignUp = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button onClick={signUp}>Sign Up</button>
-          <button onClick={signInWithGoogle}>Sign in with Google</button>
-          <p className="navigate-text" onClick={() => navigate("/login")}>
-        Already have an account? Log In
-      </p>
+          <button onClick={signInWithGoogle}>Sign up with Google</button>
           {error && <p>{error}</p>}
+          <p className="navigate-text" onClick={() => navigate("/login")}>
+            Already have an account? Log In
+      </p>
         </div>
       );
 
