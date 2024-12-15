@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "../config/firebaseConfig";
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
@@ -9,8 +9,19 @@ const LogIn = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [remMe, setRemMe] = useState(false);
     const [error, setError] = useState(""); 
     const navigate = useNavigate();  
+
+    useEffect(() => {
+        const savedEmail = localStorage.getItem("email");
+        const savedPass = localStorage.getItem("password");
+        if (savedEmail && savedPass){
+            setEmail(savedEmail);
+            setPassword(savedPass);
+            setRemMe(true);
+        }
+    }, []);
 
     const validateEmail = (email) => {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -31,6 +42,13 @@ const LogIn = () => {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             console.log("User logged in:", user);
+            if (remMe) {
+                localStorage.setItem("email", email);
+                localStorage.setItem("password", password);
+            } else {
+                localStorage.removeItem("email");
+                localStorage,removeItem("password");
+            }
             navigate("/main");
         } catch (err) {
             console.error(err);
@@ -52,7 +70,7 @@ const LogIn = () => {
       <div className="card">
         <img src={fin1} alt="fin1" className="fin1-image"/>
         <h2>Log In</h2>
-        <h3>Log in to start tracking your finances</h3>
+        {/* <h3>Log in to start tracking your finances</h3>  */}
         <label htmlFor="email">Email</label>
         <input
             type="email"
@@ -67,6 +85,15 @@ const LogIn = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
         />
+        <div>
+            <input
+            type="checkbox"
+            id="remMe"
+            checked={remMe}
+            onChange={(e) => setRemMe(e.target.checked)}
+            />
+            <label htmlFor="remMe" className="remember-me-label">Remember me</label>
+        </div>
       <button onClick={logIn}>Log In</button>
       <button onClick={signInWithGoogle}>Log in with Google</button>
       {error && <p>{error}</p>}
