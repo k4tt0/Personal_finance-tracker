@@ -9,6 +9,7 @@ const LogIn = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPass, setShowPass] = useState(false);
     const [remMe, setRemMe] = useState(false);
     const [error, setError] = useState(""); 
     const navigate = useNavigate();  
@@ -70,7 +71,7 @@ const LogIn = () => {
       <div className="card">
         <img src={fin1} alt="fin1" className="fin1-image"/>
         <h2>Log In</h2>
-        {/* <h3>Log in to start tracking your finances</h3>  */}
+        <h3>Log in to start tracking your finances</h3> 
         <label htmlFor="email">Email</label>
         <input
             type="email"
@@ -79,12 +80,19 @@ const LogIn = () => {
             onChange={(e) => setEmail(e.target.value)}
         />
         <label htmlFor="password">Password</label>
-        <input
-            type="password"
-            placeholder="Password..."
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="password-container">
+            <input
+                id="password"
+                type={showPass ? "text" : "password"}
+                placeholder="Password..."
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+            />
+            <i 
+                className={`fas ${showPass ? "fa-eye-slash" : "fa-eye"} password-toggle`}
+                onClick={() => setShowPass(!showPass)}
+            ></i>
+           </div>
         <div>
             <input
             type="checkbox"
