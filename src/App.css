@@ -40,6 +40,17 @@
   background-color: #cfdad9;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(206, 189, 189, 0.1);
+  /* text-align: center; */
+}
+
+.card-main-page {
+  padding: 2em;
+  margin: 2em ;
+  width: 900px;
+  background-color: #cfdad9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(206, 189, 189, 0.1);
+  text-align: center;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -51,6 +62,15 @@
 
   .card {
     background-color: #333;
+    color: whitesmoke;
+  }
+
+  .card-main-page {
+    background-color: #333;
+    color: whitesmoke;
+  }
+
+  .main-page-p{
     color: whitesmoke;
   }
 
@@ -92,8 +112,17 @@
   }
 
   .card {
-    background-color: #f9f9f9; /* Light card background color */
+    background-color: #e0e0e0; /* Light card background color */
     color: #000000; /* Dark text color */
+  }
+
+  .card-main-page {
+    background-color: #e0e0e0; /* Light card background color */
+    color: #000000;
+  }
+
+  .main-page-p{
+    color: #333;
   }
 
   label{
@@ -165,6 +194,19 @@
   margin: 0 auto 1em;
   width: 200px;
   height: auto;
+}
+
+.card h1 {
+  color: #333;
+  font-size: 2em;
+  margin-bottom: 0.5em;
+}
+
+.main-page-p {
+  color: #666;
+  font-size: 1.2em;
+  margin-bottom: 1em;
+  font-weight: 500;
 }
 
 .card h2 {
