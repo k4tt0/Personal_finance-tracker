@@ -25,6 +25,7 @@ const MainPage = () => {
 
 
     return (
+        <div className="main-page-container">
         <div className="card-main-page">
         <h1>Welcome back, {username}!</h1>
         <p className="main-page-p">What would you like to do today?</p>
@@ -34,6 +35,7 @@ const MainPage = () => {
         <button onClick={() => navigate("/report-generation")}>Report Generation</button>
         <button onClick={() => navigate("/media-storage")}>Media Storage</button>
         <button onClick={logOut}>Log Out</button>
+        </div>
         </div>
     );
 };
