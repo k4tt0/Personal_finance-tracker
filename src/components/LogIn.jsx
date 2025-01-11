@@ -108,6 +108,6 @@ const LogIn = () => {
       {error && <p>{error}</p>}
       <p>Don't have an account? <Link to="/auth/signup">Sign Up</Link></p>
     </div>
-    )
+    );
 
 }; export default LogIn;

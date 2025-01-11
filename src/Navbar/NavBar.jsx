@@ -31,7 +31,10 @@ const Navbar = () => {
 
     return (
         <nav className={`navbar ${theme}`}>
-            <div className="navbar-logo">
+
+            {/* <div className='navbar-container'> */}
+
+            <div>
                 <img 
                     src={theme == 'light' ? fin1Dark : fin1Light} 
                     alt="logo" 
@@ -40,24 +43,25 @@ const Navbar = () => {
             </div>
 
             <div className="navbar-links">
-              <ul>
-                <li><Link to="/main-page">Home Page</Link></li>
-                <li><Link to="/expense-logging">Expense Logging</Link></li>
-                <li><Link to="/budget-management">Budget Management</Link></li>
-                <li><Link to="/savings-tracking">Savings Tracking</Link></li>
-                <li><Link to="/report-generation">Report Generation</Link></li>
-                <li><Link to="/media-storage">Media Storage</Link></li>
-                <li><button onClick={logOut} className="sign-out-button">Sign Out</button></li>
-                <li>
-                    <img
-                        src={theme === 'light' ? toggleDark : toggleLight}
-                        alt="Toggle Theme"
-                        className="theme-toggle-button"
-                        onClick={toggleTheme}
-                    />
-                </li>
-              </ul>
+                <button onClick={() => navigate("/main-page")}>Home Page</button>
+                <button onClick={() => navigate("/expense-logging")}>Expense Logging</button>
+                <button onClick={() => navigate("/budget-management")}>Budget Management</button>
+                <button onClick={() => navigate("/savings-tracking")}>Savings Tracking</button>
+                <button onClick={() => navigate("/report-generation")}>Report Generation</button>
+                <button onClick={() => navigate("/media-storage")}>Media Storage</button>
+                <button onClick={logOut} className="sign-out-button">Sign Out</button>
+                {/* <button onClick={toggleTheme} className="theme-toggle-button"></button> */}
             </div>
+
+            <div className="navbar-toggle">
+                <img
+                    src={theme === 'light' ? toggleDark : toggleLight}
+                    alt="Toggle Theme"
+                    className="theme-toggle-button"
+                    onClick={toggleTheme}
+                />
+            </div>
+            {/* </div> */}
         </nav>
     );
 };
