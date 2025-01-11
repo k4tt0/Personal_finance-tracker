@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "../config/firebaseConfig";
 import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth' ;
+import { Link } from 'react-router-dom';
 import fin1 from "../images/fin1.png";
 
 const SignUp = () => {
@@ -99,9 +100,7 @@ const SignUp = () => {
           <button onClick={signUp}>Sign Up</button>
           <button onClick={signInWithGoogle}>Sign up with Google</button>
           {error && <p>{error}</p>}
-          <p className="navigate-text" onClick={() => navigate("/login")}>
-            Already have an account? Log In
-      </p>
+          <p>Already have an account? <Link to="/auth/login">Log In</Link></p>
         </div>
       );
 

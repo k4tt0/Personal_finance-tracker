@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "../config/firebaseConfig";
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { Link } from 'react-router-dom';
 import fin1 from "../images/fin1.png";
 
 
@@ -105,9 +106,7 @@ const LogIn = () => {
       <button onClick={logIn}>Log In</button>
       <button onClick={signInWithGoogle}>Log in with Google</button>
       {error && <p>{error}</p>}
-      <p className="navigate-text" onClick={() => navigate("/signUp")}>
-        Don't have an account? Sign Up
-      </p>
+      <p>Don't have an account? <Link to="/auth/signup">Sign Up</Link></p>
     </div>
     )
 
