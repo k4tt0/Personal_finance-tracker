@@ -9,16 +9,17 @@ import toggleLight from "../images/day.png"
 import toggleDark from "../images/night.png"
 
 const Navbar = () => {
-    const [theme, setTheme] = useState('light');
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
     const navigate = useNavigate();
 
     useEffect(() => {
-        document.body.className = theme
+        document.body.className = theme;
+        localStorage.setItem('theme', theme);
     }, [theme]);
 
     const toggleTheme = () => {
-            setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-        }
+        setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
+    }
 
     const logOut = async () => {
         try {
@@ -31,12 +32,9 @@ const Navbar = () => {
 
     return (
         <nav className={`navbar ${theme}`}>
-
-            {/* <div className='navbar-container'> */}
-
             <div>
                 <img 
-                    src={theme == 'light' ? fin1Dark : fin1Light} 
+                    src={theme === 'light' ? fin1Dark : fin1Light} 
                     alt="logo" 
                     className="logo"/>
                 {/* <Link to="/">Personal Finance Tracker</Link> */}
@@ -50,7 +48,6 @@ const Navbar = () => {
                 <button onClick={() => navigate("/report-generation")}>Report Generation</button>
                 <button onClick={() => navigate("/media-storage")}>Media Storage</button>
                 <button onClick={logOut} className="sign-out-button">Sign Out</button>
-                {/* <button onClick={toggleTheme} className="theme-toggle-button"></button> */}
             </div>
 
             <div className="navbar-toggle">
@@ -61,7 +58,6 @@ const Navbar = () => {
                     onClick={toggleTheme}
                 />
             </div>
-            {/* </div> */}
         </nav>
     );
 };
