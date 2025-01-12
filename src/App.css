@@ -117,6 +117,12 @@
     background-color: rgb(19, 29, 41);
   }
 
+  /* Add styles for links card */
+  #links-section {
+    background-color: #333;
+    color: whitesmoke;
+  }
+
 }
 
 @media (prefers-color-scheme: light) {
@@ -163,6 +169,13 @@
   button:hover {
     background-color: rgb(19, 29, 41); /* Button hover background color */
   }
+
+  /* Add styles for links card */
+  #links-section {
+    background-color: #e0e0e0;
+    color: #000000;
+  }
+
 }
 
 /* Automatic mode styles */
@@ -234,6 +247,12 @@ label.light,
   color: #333;
 }
 
+/* Add styles for links card */
+#links-section.light {
+  background-color: #e0e0e0;
+  color: #000000;
+}
+
 /* Dark theme styles */
 body.dark {
   background-color: #151516;
@@ -263,6 +282,12 @@ body.dark {
 label.dark,
 .remember-me-label.dark {
   color: rgb(180, 180, 180);
+}
+
+/* Add styles for links card */
+#links-section.dark {
+  background-color: #333;
+  color: whitesmoke;
 }
 
 .fin1-image {
