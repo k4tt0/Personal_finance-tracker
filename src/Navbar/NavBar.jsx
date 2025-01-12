@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { auth } from '../config/firebaseConfig';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { signOut } from 'firebase/auth';
 import './NavBar.css';
 import fin1Light from "../images/fin1_day.png";
@@ -11,6 +12,11 @@ import toggleDark from "../images/night.png";
 const Navbar = () => {
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
     const navigate = useNavigate();
+    const [user] = useAuthState(auth);
+    
+      if (!user) {
+        return null; // Do not render the navbar if the user is not authenticated
+      }
 
     useEffect(() => {
         document.body.className = theme;

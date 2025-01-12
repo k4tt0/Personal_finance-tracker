@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { db } from '../config/firebaseConfig';
+import { db } from '../../config/firebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
+import './BudgetManagement.css';
 
 const BudgetManagement = () => {
   const [budgets, setBudgets] = useState([]);
@@ -31,36 +32,45 @@ const BudgetManagement = () => {
   };
 
   return (
-    <div>
+    <div className="budget-management-container">
       <h2>Budget Management</h2>
-      <div>
-        <input
-          type="text"
-          placeholder="Category"
+      <div className="budget-form">
+        <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-        />
+          className="budget-input"
+        >
+          <option value="">Select Category</option>
+          <option value="food">Food</option>
+          <option value="rent">Rent</option>
+          <option value="entertainment">Entertainment</option>
+          <option value="transportation">Transportation</option>
+          <option value="utilities">Utilities</option>
+          <option value="other">Other</option>
+        </select>
         <input
           type="number"
           placeholder="Budget Amount"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
+          className="budget-input"
         />
         <select
           value={currency}
           onChange={(e) => setCurrency(e.target.value)}
+          className="budget-input"
         >
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
           <option value="RON">RON</option>
         </select>
-        <button onClick={handleAddBudget}>Add Budget</button>
+        <button onClick={handleAddBudget} className="budget-button">Add Budget</button>
       </div>
-      <div>
+      <div className="budget-list">
         <h3>Monthly Budgets</h3>
         <ul>
           {budgets.map((budget, index) => (
-            <li key={index}>
+            <li key={index} className="budget-item">
               <p>Category: {budget.category}</p>
               <p>Budget: {budget.amount} {budget.currency}</p>
               <p>Spent: {spending[budget.category] || 0} {budget.currency}</p>
@@ -69,12 +79,13 @@ const BudgetManagement = () => {
           ))}
         </ul>
       </div>
-      <div>
+      <div className="log-spending">
         <h3>Log Spending</h3>
-        <div>
+        <div className="spending-form">
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
+            className="budget-input"
           >
             <option value="">Select Category</option>
             {budgets.map((budget, index) => (
@@ -86,8 +97,9 @@ const BudgetManagement = () => {
             placeholder="Amount"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
+            className="budget-input"
           />
-          <button onClick={() => handleSpendingChange(category, amount)}>Log Spending</button>
+          <button onClick={() => handleSpendingChange(category, amount)} className="budget-button">Log Spending</button>
         </div>
       </div>
     </div>

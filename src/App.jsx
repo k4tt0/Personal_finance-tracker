@@ -9,7 +9,7 @@ import Navbar from './Navbar/NavBar';
 import LogIn from './components/LogIn';
 import MainPage from './components/MainPage';
 import ExpenseLogging from './components/ExpenseLogging';
-import BudgetManagement from './components/BudgetManagement';
+import BudgetManagement from './components/budget/BudgetManagement';
 import SavingsTracking from './components/SavingsTracking';
 import ReportGeneration from './components/ReportGeneration';
 import MediaStorage from './components/MediaStorage';

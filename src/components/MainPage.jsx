@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../config/firebaseConfig";
+import { auth, db } from "../config/firebaseConfig";
+import { doc, setDoc } from "firebase/firestore";
 
 const MainPage = () => {
     const [username, setUsername] = useState("");
@@ -8,8 +9,10 @@ const MainPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if(auth.currentUser){
-            setUsername(auth.currentUser.displayName);
+        if (auth.currentUser) {
+            const user = auth.currentUser;
+            setUsername(user.displayName);
+            saveUserProfile(user);
         }
     }, []);
 
@@ -18,8 +21,17 @@ const MainPage = () => {
         localStorage.setItem('theme', theme);
     }, [theme]);
 
+    const saveUserProfile = async (user) => {
+        const userProfile = {
+            name: user.displayName,
+            email: user.email,
+            createdAt: new Date()
+        };
+        await setDoc(doc(db, "users", user.uid), userProfile);
+    };
+
     const scrollToLinks = () => {
-        document.getElementById("links-section").scrollIntoView({ behavior: "smooth"}); 
+        document.getElementById("links-section").scrollIntoView({ behavior: "smooth" });
     };
 
     return (
