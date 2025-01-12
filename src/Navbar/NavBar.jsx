@@ -47,7 +47,7 @@ const Navbar = () => {
                 <button onClick={() => navigate("/savings-tracking")}>Savings Tracking</button>
                 <button onClick={() => navigate("/report-generation")}>Report Generation</button>
                 <button onClick={() => navigate("/media-storage")}>Media Storage</button>
-                <button onClick={logOut} className="sign-out-button">Sign Out</button>
+                <button onClick={logOut} className="sign-out-button">Log Out</button>
             </div>
 
             <div className="navbar-toggle">

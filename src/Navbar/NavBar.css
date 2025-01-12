@@ -21,6 +21,7 @@ body.dark {
 }
 
 .navbar {
+    height: 100px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -28,13 +29,25 @@ body.dark {
     position: fixed; 
     top: 0;
     left: 0;
+    transition: background 0.3s, color 0.3s; /* Add transition for gradient */
+}
+
+.navbar.light {
+    background: linear-gradient(90deg, #b1aeae, #f8d9c2); /* Gradient for light theme */
+    color: var(--text-color-light);
+}
+
+.navbar.dark {
+    background: linear-gradient(90deg, #1a1f24, #3f4c4e); /* Gradient for dark theme */
+    color: var(--text-color-dark);
 }
 
 .logo {
-    width: 160px;
-    height: 120px;
+    width: 130px;
+    height: 95px;
     cursor: pointer;
     margin-left: 25px;
+    padding: 0%;
 }
 
 .navbar-links {
@@ -55,11 +68,6 @@ body.dark {
     outline: none; 
 }
 
-/* .navbar-links button:focus {
-    outline: none;
-} */
-
-
 .theme-toggle-button {
     width: 50px;
     cursor: pointer;
@@ -67,16 +75,4 @@ body.dark {
     margin-right: 27px;
     align-items: center;
     padding: 25px;
-}
-
-.navbar.light {
-    background-color: var(--navbar-color-light);
-    color: var(--text-color-light);
-    transition: background-color 0.3s, color 0.3s; 
-}
-
-.navbar.dark {
-    background-color: var(--navbar-color-dark);
-    color: var(--text-color-dark);
-    transition: background-color 0.3s, color 0.3s; 
 }

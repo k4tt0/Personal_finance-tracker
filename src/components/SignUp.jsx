@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "../config/firebaseConfig";
 import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth' ;
 import { Link } from 'react-router-dom';
-import fin1 from "../images/fin1.png";
+import fin1Light from "../images/fin1_day.png";
+import fin1Dark from "../images/fin1_night.png";
 
 const SignUp = () => {
     const [email, setEmail] = useState("");
@@ -11,7 +12,13 @@ const SignUp = () => {
     const [username, setUsername] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        document.body.className = theme;
+        localStorage.setItem('theme', theme);
+    }, [theme]);
 
     const validateUsername = (username) => {
         const minLength = 3;
@@ -63,9 +70,12 @@ const SignUp = () => {
     };
 
     return (
-        <div className="card">
-            <img src={fin1} alt="fin1" className="fin1-image"/>
-            <h2> Sign Up </h2> {}
+        <div className={`card ${theme}`}>
+            <img 
+                src={theme === 'light' ? fin1Dark : fin1Light} 
+                alt="logo" 
+                className="logo"/>
+            <h2> Sign Up </h2>
             <h3> Create an account to start tracking your finances </h3>  
             <label htmlFor = "username"> Username </label> 
           <input

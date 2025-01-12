@@ -3,17 +3,22 @@ import { useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "../config/firebaseConfig";
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { Link } from 'react-router-dom';
-import fin1 from "../images/fin1.png";
-
+import fin1Light from "../images/fin1_day.png";
+import fin1Dark from "../images/fin1_night.png";
 
 const LogIn = () => {
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPass, setShowPass] = useState(false);
     const [remMe, setRemMe] = useState(false);
     const [error, setError] = useState(""); 
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
     const navigate = useNavigate();  
+
+    useEffect(() => {
+        document.body.className = theme;
+        localStorage.setItem('theme', theme);
+    }, [theme]);
 
     useEffect(() => {
         const savedEmail = localStorage.getItem("email");
@@ -49,7 +54,7 @@ const LogIn = () => {
                 localStorage.setItem("password", password);
             } else {
                 localStorage.removeItem("email");
-                localStorage,removeItem("password");
+                localStorage.removeItem("password");
             }
             navigate("/main");
         } catch (err) {
@@ -69,8 +74,11 @@ const LogIn = () => {
     };
 
     return (
-      <div className="card">
-        <img src={fin1} alt="fin1" className="fin1-image"/>
+      <div className={`card ${theme}`}>
+        <img 
+            src={theme === 'light' ? fin1Dark : fin1Light} 
+            alt="logo" 
+            className="logo"/>
         <h2>Log In</h2>
         <h3>Log in to start tracking your finances</h3> 
         <label htmlFor="email">Email</label>
