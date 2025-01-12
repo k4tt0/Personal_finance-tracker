@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "../config/firebaseConfig";
 import { createUserWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth' ;
-import { Link } from 'react-router-dom';
 import fin1Light from "../images/fin1_day.png";
 import fin1Dark from "../images/fin1_night.png";
 
@@ -48,7 +47,7 @@ const SignUp = () => {
                 displayName: username
             });
             console.log("User signed up:", user);
-            navigate("/main");
+            navigate('/main-page');
         } catch (err) {
             if (err.code === 'auth/email-already-in-use') {
                 setError("The email address is already in use by another account.");
@@ -62,7 +61,7 @@ const SignUp = () => {
     const signInWithGoogle = async () => {
         try {
             await signInWithPopup(auth, googleProvider);
-            navigate("/main");
+            navigate('/main-page');
         } catch (err) {
             console.error(err);
             setError(err.message);
@@ -75,7 +74,7 @@ const SignUp = () => {
                 src={theme === 'light' ? fin1Dark : fin1Light} 
                 alt="logo" 
                 className="logo"/>
-            <h2> Sign Up </h2>
+            <h2 className={theme}> Sign Up </h2>
             <h3> Create an account to start tracking your finances </h3>  
             <label htmlFor = "username"> Username </label> 
           <input

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../config/firebaseConfig";
-import { signOut } from "firebase/auth";
 
 const MainPage = () => {
     const [username, setUsername] = useState("");
@@ -19,26 +18,48 @@ const MainPage = () => {
         localStorage.setItem('theme', theme);
     }, [theme]);
 
-    const logOut = async () => {
-        try {
-            await signOut(auth);
-            navigate("/login");
-        } catch (err) {
-            console.error("Error signing out:", err);
-        }
+    const scrollToLinks = () => {
+        document.getElementById("links-section").scrollIntoView({ behavior: "smooth"}); 
     };
 
     return (
         <div className="main-page-container">
             <div className={`card-main-page ${theme}`}>
                 <h1>Welcome back, {username}!</h1>
-                <p className="main-page-p">What would you like to do today?</p>
-                <button onClick={() => navigate("/expense-logging")}>Expense Logging</button>
-                <button onClick={() => navigate("/budget-management")}>Budget Management</button>
-                <button onClick={() => navigate("/savings-tracking")}>Savings Tracking</button>
-                <button onClick={() => navigate("/report-generation")}>Report Generation</button>
-                <button onClick={() => navigate("/media-storage")}>Media Storage</button>
-                <button onClick={logOut}>Log Out</button>
+                <p className="main-page-p">Welcome to Personal Finance Tracker</p>
+                <p className="main-page-p">
+                    Take control of your finances with ease and confidence. Personal Finance Tracker is a modern web application designed to simplify financial management and help you achieve your goals. Whether you're tracking income, monitoring expenses, or building your savings, our intuitive platform offers real-time tools to keep you organized and on track.
+                </p>
+                <p className="main-page-p">
+                    With robust data security, a seamless user experience, and cross-device accessibility, Personal Finance Tracker fits effortlessly into your daily routine. Powered by Firebase, it provides secure storage, instant updates, and personalized notifications, ensuring you stay informed every step of the way.
+                </p>
+                <p className="main-page-p">
+                    Start your journey to smarter financial management today!
+                </p>
+                <button onClick={scrollToLinks}>Explore More</button>
+            </div>
+            <div id="links-section" className={`card-main-page ${theme}`}>
+                <h2>What would you like to do today?</h2>
+                <div>
+                    <button onClick={() => navigate("/expense-logging")}>Expense Logging</button>
+                    <p>Log your daily expenses and categorize them for better tracking.</p>
+                </div>
+                <div>
+                    <button onClick={() => navigate("/budget-management")}>Budget Management</button>
+                    <p>Set monthly budgets for different categories and track your spending.</p>
+                </div>
+                <div>
+                    <button onClick={() => navigate("/savings-tracking")}>Savings Tracking</button>
+                    <p>Set savings goals and monitor your progress towards achieving them.</p>
+                </div>
+                <div>
+                    <button onClick={() => navigate("/report-generation")}>Report Generation</button>
+                    <p>Generate visual reports to get insights into your spending patterns.</p>
+                </div>
+                <div>
+                    <button onClick={() => navigate("/media-storage")}>Media Storage</button>
+                    <p>Store and manage your financial documents and receipts securely.</p>
+                </div>
             </div>
         </div>
     );

@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "../config/firebaseConfig";
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
-import { Link } from 'react-router-dom';
 import fin1Light from "../images/fin1_day.png";
 import fin1Dark from "../images/fin1_night.png";
 
@@ -56,7 +55,7 @@ const LogIn = () => {
                 localStorage.removeItem("email");
                 localStorage.removeItem("password");
             }
-            navigate("/main");
+            navigate('/main-page'); // Navigate to the home page
         } catch (err) {
             console.error(err);
             setError(err.message);
@@ -66,7 +65,7 @@ const LogIn = () => {
     const signInWithGoogle = async () => {
         try {
             await signInWithPopup(auth, googleProvider);
-            navigate("/main");
+            navigate('/main-page'); // Navigate to the home page
         } catch (err) {
             console.error(err);
             setError(err.message);
@@ -79,7 +78,7 @@ const LogIn = () => {
             src={theme === 'light' ? fin1Dark : fin1Light} 
             alt="logo" 
             className="logo"/>
-        <h2>Log In</h2>
+        <h2 className={theme}>Log In</h2>
         <h3>Log in to start tracking your finances</h3> 
         <label htmlFor="email">Email</label>
         <input

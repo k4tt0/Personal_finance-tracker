@@ -6,6 +6,7 @@ import "./App.css";
 import "./index.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Navbar from './Navbar/NavBar';
+import LogIn from './components/LogIn';
 import MainPage from './components/MainPage';
 import ExpenseLogging from './components/ExpenseLogging';
 import BudgetManagement from './components/BudgetManagement';
@@ -33,6 +34,7 @@ const App = () => {
         <Routes>
           {user ? (
             <>
+              <Route path="/auth/login" Component={LogIn} />
               <Route path="/main-page" element={<MainPage />} />
               <Route path="/expense-logging" element={<ExpenseLogging />} />
               <Route path="/budget-management" element={<BudgetManagement />} />

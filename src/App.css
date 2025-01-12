@@ -7,9 +7,10 @@
 
 .logo {
   height: 6em;
-  padding: 1.5em;
+  /* padding: 1.5em; */
   will-change: filter;
   transition: filter 300ms;
+
 }
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
@@ -41,15 +42,18 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(206, 189, 189, 0.1);
   /* text-align: center; */
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .main-page-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   min-height: 100vh;
   padding: 2em;
   box-sizing: border-box;
+  overflow-y: auto; /* Make the main page scrollable */
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .card-main-page {
@@ -60,6 +64,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(206, 189, 189, 0.1);
   text-align: center;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -196,6 +201,68 @@
   button:hover {
     background-color: rgb(19, 29, 41); /* Button hover background color */
   }
+}
+
+/* Light theme styles */
+body.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.card.light {
+  background-color: #e0e0e0;
+  color: #000000;
+}
+
+.card-main-page.light {
+  background-color: #e0e0e0;
+  color: #000000;
+}
+
+.main-page-p.light {
+  color: #333;
+}
+
+.card h1.light,
+.card h2.light,
+.card h3.light {
+  color: #333;
+}
+
+label.light,
+.remember-me-label.light {
+  color: #333;
+}
+
+/* Dark theme styles */
+body.dark {
+  background-color: #151516;
+  color: whitesmoke;
+}
+
+.card.dark {
+  background-color: #333;
+  color: whitesmoke;
+}
+
+.card-main-page.dark {
+  background-color: #333;
+  color: whitesmoke;
+}
+
+.main-page-p.dark {
+  color: whitesmoke;
+}
+
+.card h1.dark,
+.card h2.dark,
+.card h3.dark {
+  color: whitesmoke;
+}
+
+label.dark,
+.remember-me-label.dark {
+  color: rgb(180, 180, 180);
 }
 
 .fin1-image {
