@@ -34,7 +34,7 @@ with Firebase services for storage, real-time updates, and notifications.
     2.2 Non-Functional Requirements - Remote Hosting: 
 The application will be hosted on a server, accessible to anyone. 
     - Responsiveness: 
-The app will be responsive, ensuring usability on desktops, tablets, and smartphones.
+The app will be responsive, ensuring usability on desktops.
     - Data Security: 
 User data will be securely stored and transmitted using Firebase's security protocols.
 
