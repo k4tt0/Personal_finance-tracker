@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { db } from '../config/firebaseConfig';
+import { collection, addDoc, updateDoc, doc } from 'firebase/firestore';
 
 const SavingsTracking = () => {
   const [goals, setGoals] = useState([]);
@@ -7,27 +9,32 @@ const SavingsTracking = () => {
   const [currentAmount, setCurrentAmount] = useState("");
   const [currency, setCurrency] = useState("USD");
 
-  const handleAddGoal = () => {
+  const handleAddGoal = async () => {
     const newGoal = {
       goalName,
       targetAmount: parseFloat(targetAmount),
       currentAmount: parseFloat(currentAmount),
-      currency
+      currency,
+      createdAt: new Date()
     };
-    setGoals([...goals, newGoal]);
+
+    const docRef = await addDoc(collection(db, 'savings'), newGoal);
+    setGoals([...goals, { ...newGoal, id: docRef.id }]);
     setGoalName("");
     setTargetAmount("");
     setCurrentAmount("");
     setCurrency("USD");
   };
 
-  const handleUpdateProgress = (index, amount) => {
+  const handleUpdateProgress = async (index, amount) => {
     const updatedGoals = goals.map((goal, i) => {
       if (i === index) {
-        return {
+        const updatedGoal = {
           ...goal,
           currentAmount: goal.currentAmount + parseFloat(amount)
         };
+        updateDoc(doc(db, 'savings', goal.id), updatedGoal);
+        return updatedGoal;
       }
       return goal;
     });

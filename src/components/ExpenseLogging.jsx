@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { db, storage } from '../config/firebaseConfig';
+import { collection, addDoc } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const ExpenseLogging = () => {
   const [expenses, setExpenses] = useState([]);
@@ -8,14 +11,24 @@ const ExpenseLogging = () => {
   const [currency, setCurrency] = useState("USD");
   const [receipt, setReceipt] = useState(null);
 
-  const handleAddExpense = () => {
+  const handleAddExpense = async () => {
+    let receiptUrl = "";
+    if (receipt) {
+      const storageRef = ref(storage, `receipts/${receipt.name}`);
+      await uploadBytes(storageRef, receipt);
+      receiptUrl = await getDownloadURL(storageRef);
+    }
+
     const newExpense = {
       description,
       amount,
       category,
       currency,
-      receipt
+      receipt: receiptUrl,
+      date: new Date()
     };
+
+    await addDoc(collection(db, 'expenses'), newExpense);
     setExpenses([...expenses, newExpense]);
     setDescription("");
     setAmount("");
@@ -80,7 +93,7 @@ const ExpenseLogging = () => {
               <p>Category: {expense.category}</p>
               {expense.receipt && (
                 <p>
-                  Receipt: <a href={URL.createObjectURL(expense.receipt)} target="_blank" rel="noopener noreferrer">View</a>
+                  Receipt: <a href={expense.receipt} target="_blank" rel="noopener noreferrer">View</a>
                 </p>
               )}
             </li>

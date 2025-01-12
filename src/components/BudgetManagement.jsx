@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { db } from '../config/firebaseConfig';
+import { collection, addDoc } from 'firebase/firestore';
 
 const BudgetManagement = () => {
   const [budgets, setBudgets] = useState([]);
@@ -7,12 +9,14 @@ const BudgetManagement = () => {
   const [currency, setCurrency] = useState("USD");
   const [spending, setSpending] = useState({});
 
-  const handleAddBudget = () => {
+  const handleAddBudget = async () => {
     const newBudget = {
       category,
       amount: parseFloat(amount),
       currency
     };
+
+    await addDoc(collection(db, 'budgets'), newBudget);
     setBudgets([...budgets, newBudget]);
     setCategory("");
     setAmount("");
