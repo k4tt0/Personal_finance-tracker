@@ -7,17 +7,16 @@ import "./index.css";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import Navbar from './Navbar/NavBar';
 import LogIn from './components/LogIn';
+import SignUp from './components/SignUp';
 import MainPage from './components/MainPage';
 import ExpenseLogging from './components/ExpenseLogging';
 import BudgetManagement from './components/budget/BudgetManagement';
 import SavingsTracking from './components/SavingsTracking';
 import ReportGeneration from './components/ReportGeneration';
 import MediaStorage from './components/MediaStorage';
-import Auth from './components/auth'
-
+import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
-
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -28,31 +27,71 @@ const App = () => {
   }, []);
 
   return (
-
     <Router>
-      {user && <Navbar/>}
-        <Routes>
-          {user ? (
-            <>
-              <Route path="/auth/login" Component={LogIn} />
-              <Route path="/main-page" element={<MainPage />} />
-              <Route path="/expense-logging" element={<ExpenseLogging />} />
-              <Route path="/budget-management" element={<BudgetManagement />} />
-              <Route path="/savings-tracking" element={<SavingsTracking />} />
-              <Route path="/report-generation" element={<ReportGeneration />} />
-              <Route path="/media-storage" element={<MediaStorage />} />
-              <Route path="*" element={<Navigate to="/" />} />
-            </>
-          ) : (
-            <>
-              <Route path="/auth/*" element={<Auth />} />
-              <Route path="*" element={<Navigate to="/auth/login" />}/>
-            </>
-          )}
-        </Routes>
+      {user && <Navbar />}
+      <Routes>
+        <Route path="/login" element={<LogIn />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <MainPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/main-page"
+          element={
+            <PrivateRoute>
+              <MainPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/expense-logging"
+          element={
+            <PrivateRoute>
+              <ExpenseLogging />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/budget-management"
+          element={
+            <PrivateRoute>
+              <BudgetManagement />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/savings-tracking"
+          element={
+            <PrivateRoute>
+              <SavingsTracking />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/report-generation"
+          element={
+            <PrivateRoute>
+              <ReportGeneration />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/media-storage"
+          element={
+            <PrivateRoute>
+              <MediaStorage />
+            </PrivateRoute>
+          }
+        />
+        <Route path="*" element={<Navigate to={user ? "/main-page" : "/login"} />} />
+      </Routes>
     </Router>
-
-    );
+  );
 };
 
 export default App;
