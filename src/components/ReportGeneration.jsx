@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
+import { db } from '../config/firebaseConfig';
+import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore'; 
 
 const ReportGeneration = () => {
   const [timePeriod, setTimePeriod] = useState("week");
   const [data, setData] = useState({
-    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    labels: [],
     datasets: [
       {
         label: 'Expenses',
-        data: [12, 19, 3, 5, 2, 3, 7],
+        data: [],
         fill: false,
         backgroundColor: 'rgb(75, 192, 192)',
         borderColor: 'rgba(75, 192, 192, 0.2)',
@@ -17,51 +19,93 @@ const ReportGeneration = () => {
     ],
   });
 
-  const handleTimePeriodChange = (e) => {
-    const period = e.target.value;
-    setTimePeriod(period);
+  useEffect(() => {
+    fetchData(); // Fetch data whenever the component mounts or time period changes
+  }, [timePeriod]);
 
-    // Update data based on the selected time period
-    if (period === "week") {
-      setData({
-        labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-        datasets: [
-          {
-            label: 'Expenses',
-            data: [12, 19, 3, 5, 2, 3, 7],
-            fill: false,
-            backgroundColor: 'rgb(75, 192, 192)',
-            borderColor: 'rgba(75, 192, 192, 0.2)',
-          },
-        ],
+  // Function to fetch data from Firestore based on time period
+  const fetchData = async () => {
+    const expensesRef = collection(db, 'expenses');
+    const currentDate = new Date();
+    let startDate;
+
+    // Set the start date based on the selected time period
+    if (timePeriod === "week") {
+      startDate = new Date(currentDate.setDate(currentDate.getDate() - 7)); // Last 7 days
+    } else if (timePeriod === "month") {
+      startDate = new Date(currentDate.setMonth(currentDate.getMonth() - 1)); // Last month
+    } else if (timePeriod === "year") {
+      startDate = new Date(currentDate.setFullYear(currentDate.getFullYear() - 1)); // Last year
+    }
+
+    const q = query(
+      expensesRef,
+      where('date', '>=', Timestamp.fromDate(startDate)) // Fetch expenses after the start date
+    );
+
+    try {
+      const querySnapshot = await getDocs(q);
+      const expenseData = [];
+      querySnapshot.forEach((doc) => {
+        expenseData.push(doc.data());
       });
-    } else if (period === "month") {
-      setData({
-        labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
-        datasets: [
-          {
-            label: 'Expenses',
-            data: [50, 100, 150, 200],
-            fill: false,
-            backgroundColor: 'rgb(75, 192, 192)',
-            borderColor: 'rgba(75, 192, 192, 0.2)',
-          },
-        ],
+
+      
+      formatChartData(expenseData);
+    } catch (error) {
+      console.error("Error fetching expenses data: ", error);
+    }
+  };
+
+  // Function to format the chart data based on the fetched expenses
+  const formatChartData = (expenseData) => {
+    let labels = [];
+    let expenses = [];
+
+    // Process the data for the chart based on the selected time period
+    if (timePeriod === "week") {
+      labels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+      expenses = Array(7).fill(0); 
+      expenseData.forEach((expense) => {
+        const expenseDate = expense.date.toDate(); 
+        const dayOfWeek = expenseDate.getDay(); 
+        expenses[dayOfWeek] += expense.amount; 
       });
-    } else if (period === "year") {
-      setData({
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [
-          {
-            label: 'Expenses',
-            data: [300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400],
-            fill: false,
-            backgroundColor: 'rgb(75, 192, 192)',
-            borderColor: 'rgba(75, 192, 192, 0.2)',
-          },
-        ],
+    } else if (timePeriod === "month") {
+      labels = ["Week 1", "Week 2", "Week 3", "Week 4"];
+      expenses = Array(4).fill(0); 
+      expenseData.forEach((expense) => {
+        const expenseDate = expense.date.toDate();
+        const week = Math.floor(expenseDate.getDate() / 7);
+        expenses[week] += expense.amount;
+      });
+    } else if (timePeriod === "year") {
+      labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      expenses = Array(12).fill(0);
+      expenseData.forEach((expense) => {
+        const expenseDate = expense.date.toDate();
+        const month = expenseDate.getMonth(); 
+        expenses[month] += expense.amount;
       });
     }
+
+    
+    setData({
+      labels: labels,
+      datasets: [
+        {
+          label: 'Expenses',
+          data: expenses,
+          fill: false,
+          backgroundColor: 'rgb(75, 192, 192)',
+          borderColor: 'rgba(75, 192, 192, 0.2)',
+        },
+      ],
+    });
+  };
+
+  const handleTimePeriodChange = (e) => {
+    setTimePeriod(e.target.value); // Update the time period
   };
 
   return (
