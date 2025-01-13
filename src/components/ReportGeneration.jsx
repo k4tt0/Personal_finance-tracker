@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
-import 'chart.js/auto';
+import Chart from 'chart.js/auto';
 import { db } from '../config/firebaseConfig';
 import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore'; 
 
@@ -119,7 +119,7 @@ const ReportGeneration = () => {
           <option value="year">Year</option>
         </select>
       </div>
-      <div>
+      <div style={{ width: '100%', height: '50%' }}>
         <Line data={data} />
       </div>
     </div>
