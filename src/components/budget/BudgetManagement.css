@@ -1,8 +1,26 @@
+:root {
+  --background-light: #f9f9f9;
+  --background-dark: #333;
+  --text-light: #000;
+  --text-dark: #fff;
+}
+
+body.light-theme {
+  --background-color: var(--background-light);
+  --text-color: var(--text-light);
+}
+
+body.dark-theme {
+  --background-color: var(--background-dark);
+  --text-color: var(--text-dark);
+}
+
 .budget-management-container {
   max-width: 800px;
   margin: 0 auto;
   padding: 2rem;
-  background-color: #f9f9f9;
+  background-color: var(--background-color);
+  color: var(--text-color);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
