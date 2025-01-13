@@ -163,8 +163,3 @@ const SavingsTracking = () => {
 };
 
 export default SavingsTracking;
-    </div>
-  );
-};
-
-export default SavingsTracking;
