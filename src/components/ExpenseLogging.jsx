@@ -193,5 +193,3 @@ const ExpenseLogging = ({ theme }) => {
 };
 
 export default ExpenseLogging;
-
-
