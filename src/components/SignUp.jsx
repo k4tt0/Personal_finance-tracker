@@ -109,7 +109,7 @@ const SignUp = () => {
           <button onClick={signUp}>Sign Up</button>
           <button onClick={signInWithGoogle}>Sign up with Google</button>
           {error && <p>{error}</p>}
-          <p>Already have an account? <Link to="/auth/login">Log In</Link></p>
+          <p>Already have an account? <Link to="/login">Log In</Link></p>
         </div>
       );
 
