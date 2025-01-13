@@ -6,39 +6,44 @@
     --background-color-dark: #000000;
     --text-color-dark: #ffffff;
     --navbar-color-dark: #343a40;
+
+    --button-hover-bg-light: #f0f0f0;
+    --button-hover-text-light: #333;
+    --button-hover-bg-dark: #555;
+    --button-hover-text-dark: #eee;
 }
 
 body.light {
     background-color: var(--background-color-light);
     color: var(--text-color-light);
-    transition: background-color 0.3s, color 0.3s; 
+    transition: background-color 0.3s, color 0.3s;
 }
 
 body.dark {
     background-color: var(--background-color-dark);
     color: var(--text-color-dark);
-    transition: background-color 0.3s, color 0.3s; 
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .navbar {
-    height: 100px;
+    height: 70px;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between; 
-    position: fixed; 
+    justify-content: space-between;
+    position: fixed;
     top: 0;
     left: 0;
-    transition: background 0.3s, color 0.3s; /* Add transition for gradient */
+    transition: background 0.3s, color 0.3s;
 }
 
 .navbar.light {
-    background: linear-gradient(90deg, #b1aeae, #f8d9c2); /* Gradient for light theme */
+    background: linear-gradient(90deg, #b1aeae, #f8d9c2);
     color: var(--text-color-light);
 }
 
 .navbar.dark {
-    background: linear-gradient(90deg, #1a1f24, #3f4c4e); /* Gradient for dark theme */
+    background: linear-gradient(90deg, #1a1f24, #3f4c4e);
     color: var(--text-color-dark);
 }
 
@@ -53,25 +58,40 @@ body.dark {
 .navbar-links {
     display: flex;
     justify-content: space-between;
-    align-items: center; 
+    align-items: center;
     flex-direction: row;
     gap: 15px;
 }
 
 .navbar-links button {
-    background: none; 
-    border: none; 
-    color: inherit; 
+    background: none;
+    border: none;
+    color: inherit;
     font-size: 17px;
-    cursor: pointer; 
+    cursor: pointer;
     font-weight: 600;
-    outline: none; 
+    outline: none;
+    transition: transform 0.2s ease, color 0.2s ease, background-color 0.2s ease; /* Smooth animation */
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.navbar-links button:hover {
+    transform: scale(1.05); /* Slight zoom effect */
+    background-color: var(--button-hover-bg-light); /* Default light hover */
+    color: var(--button-hover-text-light); /* Default light text hover */
+}
+
+/* Adjust hover colors for dark mode */
+body.dark .navbar-links button:hover {
+    background-color: var(--button-hover-bg-dark);
+    color: var(--button-hover-text-dark);
 }
 
 .theme-toggle-button {
     width: 50px;
     cursor: pointer;
-    margin-left: auto; 
+    margin-left: auto;
     margin-right: 27px;
     align-items: center;
     padding: 25px;
